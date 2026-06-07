@@ -8,7 +8,7 @@ type Perangkat struct {
 	nama    string
 	ruangan string
 	watt    float64
-	durasi  float64 // Lama pemakaian harian dalam jam
+	durasi  float64 
 }
 
 type TabPerangkat struct {
