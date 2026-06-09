@@ -1,3 +1,5 @@
+TUGAS BESAR ALGORITMA PEMOGRAMAN 2 (POWER LOG)
+
 1. Pendahuluan 
 Tugas Besar ini bertujuan untuk merancang dan membangun PowerLog, sebuah aplikasi pencatatan konsumsi listrik perangkat elektronik rumah tangga. Tujuan utama dari pengembangan aplikasi ini adalah untuk membantu pengguna memantau efisiensi energi dengan mencatat daya dalam satuan watt dan durasi penggunaan setiap perangkat. Melalui aplikasi ini, pengguna dapat mengetahui total konsumsi energi harian dalam satuan Watt-hour atau Wh serta mengidentifikasi perangkat mana yang paling boros energi.
 
