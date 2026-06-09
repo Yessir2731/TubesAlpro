@@ -98,7 +98,6 @@ func cariBerdasarkanRuangan(T TabPerangkat, targetRuangan string) {
 }
 
 // Pencarian berdasarkan Nama menggunakan Binary Search
-// Syarat: Data harus diurutkan berdasarkan nama (abjad) terlebih dahulu!
 func cariBerdasarkanNama(T TabPerangkat, targetNama string) int {
 	var kiri, kanan, tengah int
 
@@ -196,56 +195,121 @@ func tampilkanStatistik(T TabPerangkat) {
 }
 
 // ==========================================
-// FUNGSI UTAMA (MAIN)
+// FUNGSI UTAMA (MAIN INTERAKTIF)
 // ==========================================
 func main() {
 	var daftar TabPerangkat
-	var indeksDitemukan int
+	var menu, indeks, indeksDitemukan int
+	var nama, ruangan string
+	var watt, durasi float64
 
 	// Inisialisasi jumlah data awal
 	daftar.n = 0
 
-	fmt.Println("=== SIMULASI TAMBAH DATA (Spesifikasi a & b) ===")
-	tambahPerangkat(&daftar, "Kulkas", "Dapur", 150.0, 24.0)    // 3600 Wh
-	tambahPerangkat(&daftar, "AC", "Kamar", 400.0, 8.0)         // 3200 Wh
-	tambahPerangkat(&daftar, "Televisi", "Keluarga", 80.0, 5.0) // 400 Wh
-	tambahPerangkat(&daftar, "Blender", "Dapur", 250.0, 0.5)    // 125 Wh
+	// Pengisian data awal dummy (dari simulasi bawaan Anda)
+	tambahPerangkat(&daftar, "Kulkas", "Dapur", 150.0, 24.0)    
+	tambahPerangkat(&daftar, "AC", "Kamar", 400.0, 8.0)         
+	tambahPerangkat(&daftar, "Televisi", "Keluarga", 80.0, 5.0) 
+	tambahPerangkat(&daftar, "Blender", "Dapur", 250.0, 0.5)    
 
-	fmt.Println("\n--- Daftar Perangkat Saat Ini ---")
-	cetakSemuaPerangkat(daftar)
+	for {
+		fmt.Println("\n==========================================")
+		fmt.Println("            MENU UTAMA POWERLOG           ")
+		fmt.Println("==========================================")
+		fmt.Println("1. Tampilkan Semua Perangkat")
+		fmt.Println("2. Tambah Perangkat Baru")
+		fmt.Println("3. Ubah Data Perangkat")
+		fmt.Println("4. Hapus Perangkat")
+		fmt.Println("5. Cari Perangkat Berdasarkan Ruangan (Sequential)")
+		fmt.Println("6. Cari Perangkat Berdasarkan Nama (Binary)")
+		fmt.Println("7. Urutkan Konsumsi Energi Tertinggi (Selection)")
+		fmt.Println("8. Urutkan Abjad Nama Perangkat (Insertion)")
+		fmt.Println("9. Tampilkan Statistik & Daftar Terboros")
+		fmt.Println("0. Keluar")
+		fmt.Print("Pilih nomor menu: ")
+		fmt.Scan(&menu)
 
-	fmt.Println("\n=== SIMULASI UBAH & HAPUS DATA (Spesifikasi a) ===")
-	// Mengubah data Televisi (indeks 2) menjadi 100 Watt
-	ubahPerangkat(&daftar, 2, "Televisi LED", "Keluarga", 100.0, 6.0)
-	// Menghapus data Blender (indeks 3)
-	hapusPerangkat(&daftar, 3)
+		if menu == 0 {
+			fmt.Println("Keluar dari program. Terima kasih!")
+			break
+		}
 
-	fmt.Println("\n--- Daftar Perangkat Setelah Perubahan ---")
-	cetakSemuaPerangkat(daftar)
-
-	// Menampilkan Statistik Awal
-	tampilkanStatistik(daftar)
-
-	fmt.Println("\n=== SIMULASI PENGURUTAN SELECTION SORT (Spesifikasi d) ===")
-	fmt.Println("Mengurutkan berdasarkan konsumsi energi tertinggi:")
-	urutEnergiTertinggi(&daftar)
-	cetakSemuaPerangkat(daftar)
-
-	fmt.Println("\n=== SIMULASI PENGURUTAN INSERTION SORT (Spesifikasi d) ===")
-	fmt.Println("Mengurutkan berdasarkan abjad nama perangkat:")
-	urutAbjadNama(&daftar)
-	cetakSemuaPerangkat(daftar)
-
-	fmt.Println("\n=== SIMULASI PENCARIAN (Spesifikasi c) ===")
-	// 1. Sequential Search berdasarkan ruangan
-	cariBerdasarkanRuangan(daftar, "Dapur")
-
-	// 2. Binary Search berdasarkan nama
-	// (Aman digunakan karena data sudah diurutkan berdasarkan abjad nama di langkah sebelumnya)
-	indeksDitemukan = cariBerdasarkanNama(daftar, "AC")
-	if indeksDitemukan != -1 {
-		fmt.Printf("\nHasil Binary Search: Perangkat 'AC' ditemukan pada indeks ke-%d.\n", indeksDitemukan)
-	} else {
-		fmt.Println("\nHasil Binary Search: Perangkat tidak ditemukan.")
+		switch menu {
+		case 1:
+			fmt.Println("\n--- Daftar Perangkat Saat Ini ---")
+			cetakSemuaPerangkat(daftar)
+		case 2:
+			fmt.Println("\n--- Tambah Perangkat Baru ---")
+			fmt.Print("Nama Perangkat  : ")
+			fmt.Scan(&nama)
+			fmt.Print("Lokasi Ruangan  : ")
+			fmt.Scan(&ruangan)
+			fmt.Print("Daya (Watt)     : ")
+			fmt.Scan(&watt)
+			fmt.Print("Durasi (Jam)    : ")
+			fmt.Scan(&durasi)
+			tambahPerangkat(&daftar, nama, ruangan, watt, durasi)
+		case 3:
+			fmt.Println("\n--- Ubah Data Perangkat ---")
+			cetakSemuaPerangkat(daftar)
+			fmt.Print("Masukkan indeks data yang ingin diubah: ")
+			fmt.Scan(&indeks)
+			fmt.Print("Nama Baru       : ")
+			fmt.Scan(&nama)
+			fmt.Print("Ruangan Baru    : ")
+			fmt.Scan(&ruangan)
+			fmt.Print("Watt Baru       : ")
+			fmt.Scan(&watt)
+			fmt.Print("Durasi Baru     : ")
+			fmt.Scan(&durasi)
+			ubahPerangkat(&daftar, indeks, nama, ruangan, watt, durasi)
+		case 4:
+			fmt.Println("\n--- Hapus Perangkat ---")
+			cetakSemuaPerangkat(daftar)
+			fmt.Print("Masukkan indeks data yang ingin dihapus: ")
+			fmt.Scan(&indeks)
+			hapusPerangkat(&daftar, indeks)
+		case 5:
+			fmt.Println("\n--- Pencarian Berdasarkan Ruangan ---")
+			fmt.Print("Masukkan nama ruangan yang dicari: ")
+			fmt.Scan(&ruangan)
+			cariBerdasarkanRuangan(daftar, ruangan)
+		case 6:
+			fmt.Println("\n--- Pencarian Berdasarkan Nama (Binary Search) ---")
+			fmt.Print("Masukkan nama perangkat yang dicari: ")
+			fmt.Scan(&nama)
+			
+			// FITUR TAMBAHAN: Otomatis mengurutkan abjad sebelum melakukan Binary Search
+			urutAbjadNama(&daftar)
+			indeksDitemukan = cariBerdasarkanNama(daftar, nama)
+			
+			if indeksDitemukan != -1 {
+				fmt.Printf("Perangkat '%s' ditemukan pada indeks ke-%d.\n", nama, indeksDitemukan)
+				fmt.Printf("Detail: [%s] %.1f Watt, %.1f jam/hari\n", 
+					daftar.data[indeksDitemukan].ruangan, 
+					daftar.data[indeksDitemukan].watt, 
+					daftar.data[indeksDitemukan].durasi)
+			} else {
+				fmt.Println("Perangkat tidak ditemukan.")
+			}
+		case 7:
+			urutEnergiTertinggi(&daftar)
+			fmt.Println("✓ Data berhasil diurutkan berdasarkan konsumsi energi tertinggi.")
+			cetakSemuaPerangkat(daftar)
+		case 8:
+			urutAbjadNama(&daftar)
+			fmt.Println("✓ Data berhasil diurutkan berdasarkan abjad nama.")
+			cetakSemuaPerangkat(daftar)
+		case 9:
+			// Menampilkan total energi harian
+			tampilkanStatistik(daftar)
+			
+			// FITUR TAMBAHAN: Menampilkan "Daftar" peringkat perangkat paling boros keseluruhan
+			fmt.Println("\n--- Peringkat Perangkat Dari yang Paling Boros ---")
+			urutEnergiTertinggi(&daftar)
+			cetakSemuaPerangkat(daftar)
+		default:
+			fmt.Println("Pilihan menu tidak valid. Silakan coba lagi.")
+		}
 	}
 }
